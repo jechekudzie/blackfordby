@@ -15,13 +15,24 @@
                     :selected="'male'"
                     placeholder="Select gender" />
             </div>
-
             <div>
                 <x-form.flow-datepicker  name="dob" id="dob" placeholder="Date of birth"/>
             </div>
 
-        @endslot
+            <div>
+                <x-cards.student_card avatar="https://i.pravatar.cc/300" name="Nigel" registration_number="397398373897" course="Animal hus" />
+            </div>
 
+
+        @endslot
     </x-cards.form-card>
+
+
+
+
+
+
+
+
     @endslot
 </x-layouts.app>
