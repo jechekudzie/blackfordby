@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('address_types', function (Blueprint $table) {
+        Schema::create('proficiency_levels', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // e.g., Physical, Postal
+            $table->string('name'); // e.g., Beginner, Intermediate, Advanced
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('address_types');
+        Schema::dropIfExists('proficiency_levels');
     }
 };

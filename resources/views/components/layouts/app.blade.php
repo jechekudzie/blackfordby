@@ -160,15 +160,12 @@
         </ul>
     </div>
 </aside>
-
 <div class="p-4 sm:ml-64">
     <div class="p-4 border-1  min-h-screen mx-auto border-gray-200 border rounded-lg dark:border-gray-700 mt-14">
 
         {{ $content ?? '' }}
     </div>
 </div>
-
-
 <footer class="bg-white rounded-lg shadow dark:bg-gray-800">
     <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
       <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023
@@ -177,7 +174,6 @@
 
     </div>
 </footer>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
 </body>
 </html>

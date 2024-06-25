@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('address_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name'); // e.g., Physical, Postal
-            $table->timestamps();
+        Schema::table('address_types', function (Blueprint $table) {
+            $table->string('slug')->nullable();
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('address_types');
+        Schema::table('address_types', function (Blueprint $table) {
+            //
+        });
     }
 };
