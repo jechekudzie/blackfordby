@@ -1,40 +1,42 @@
 <div>
     <form wire:submit.prevent="submit">
 
-        <x-form.input-padding class="mt-3">
+        <x-form.input-padding class="mt-2.5">
             <x-form.drop-down
-                name="gender"
-                :options="['male', 'female']"
-                :selected="'male'"
-                placeholder="Address Type" />
+                wire:model="addressTypeId"
+                name="addressTypeId"
+                :options="$addressTypes"
+                :selected="$addressTypeSelected"
+                placeholder="Select Address Type" />
         </x-form.input-padding>
 
             <x-form.input-padding class="mt-2.5">
                 <x-form.drop-down
-                    name="gender"
-                    :options="['male', 'female']"
-                    :selected="'male'"
-                    placeholder="Country" />
+                    wire:model="countryId"
+                    name="countryId"
+                    :options="$countries"
+                    :selected="$selectedCountry"
+                    placeholder="Select Country" />
             </x-form.input-padding>
 
         <x-form.input-padding class="mt-8">
-            <x-form.floating-input name="address_line1" id="address_line1" placeholder="Address Line 1"/>
+            <x-form.floating-input wire:model="addressLine1" name="addressLine1" id="addressLine1" placeholder="Address Line 1"/>
         </x-form.input-padding>
 
         <x-form.input-padding class="mt-8">
-            <x-form.floating-input name="address_line2" id="address_line2" placeholder="Address Line 2"/>
+            <x-form.floating-input wire:model="addressLine2" name="addressLine2" id="addressLine2" placeholder="Address Line 2"/>
         </x-form.input-padding>
 
         <x-form.input-padding class="mt-8">
-            <x-form.floating-input name="city" id="city" placeholder="City"/>
+            <x-form.floating-input wire:model="city" name="city" id="city" placeholder="City"/>
         </x-form.input-padding>
 
         <x-form.input-padding class="mt-8">
-            <x-form.floating-input name="state" id="state" placeholder="State"/>
+            <x-form.floating-input wire:model="state" name="state" id="state" placeholder="State"/>
         </x-form.input-padding>
 
         <x-form.input-padding class="mt-8">
-            <x-form.floating-input name="zipcode" id="zipcode" placeholder="Zip Code"/>
+            <x-form.floating-input wire:model="zipCode" name="zipCode" id="zipCode" placeholder="Zip Code"/>
         </x-form.input-padding>
     </form>
 </div>

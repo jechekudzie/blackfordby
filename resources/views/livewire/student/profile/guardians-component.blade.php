@@ -1,18 +1,80 @@
 <div>
     <form wire:submit.prevent="submit">
-        <x-form.input-padding>
-            <x-form.floating-input  wire:model="first_name"  name="first_name" id="first_name" placeholder="First Name" />
-        </x-form.input-padding>
-        <x-form.input-padding>
-            <x-form.floating-input  wire:model="last_name"  name="last_name" id="last_name" placeholder="Last Name" />
-        </x-form.input-padding>
 
-        <x-form.input-padding>
-            <x-form.floating-input  wire:model="relationship"  name="relationship" id="relationship" placeholder="Relationship" />
-        </x-form.input-padding>
+        <div class="flex flex-row gap-4 mt-3">
+            <div class="w-1/2">
+                <x-cards.simple-card   title="Guardian Details">
+                    <div class="flex flex-col gap-2">
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="guardianFirstName"
+                                name="guardianFirstName"
+                                id="guardianFirstName"
+                                placeholder="First Name" />
+                        </x-form.input-padding>
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="guardianLastName"
+                                name="guardianLastName"
+                                id="guardianLastName"
+                                placeholder="Last Name" />
+                        </x-form.input-padding>
 
-        <x-form.input-padding>
-            <x-form.floating-input  wire:model="contact_details"  name="contact_details" id="contact_details" placeholder="Contact Details" />
-        </x-form.input-padding>
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="guardianRelationship"
+                                name="guardianRelationship"
+                                id="guardianRelationship"
+                                placeholder="Relationship" />
+                        </x-form.input-padding>
+
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="guardianContactDetails"
+                                name="guardianContactDetails"
+                                id="guardianContactDetails"
+                                placeholder="Contact Details" />
+                        </x-form.input-padding>
+                    </div>
+                </x-cards.simple-card>
+            </div>
+            <div class="w-1/2">
+                <x-cards.simple-card   title="Next Of Kin Details">
+                    <div class="flex flex-col gap-2">
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="nextOfKinFirstName"
+                                name="nextOfKinFirstName"
+                                id="nextOfKinFirstName"
+                                placeholder="First Name" />
+                        </x-form.input-padding>
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="nextOfKinLastName"
+                                name="nextOfKinLastName"
+                                id="nextOfKinLastName"
+                                placeholder="Last Name" />
+                        </x-form.input-padding>
+
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="nextOfKinRelationship"
+                                name="nextOfKinRelationship"
+                                id="nextOfKinRelationship"
+                                placeholder="Relationship" />
+                        </x-form.input-padding>
+
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="nextOfKinContactDetails"
+                                name="nextOfKinContactDetails"
+                                id="nextOfKinContactDetails"
+                                placeholder="Contact Details" />
+                        </x-form.input-padding>
+                    </div>
+                </x-cards.simple-card>
+            </div>
+        </div>
+
     </form>
 </div>

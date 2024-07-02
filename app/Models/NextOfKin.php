@@ -11,6 +11,8 @@ class NextOfKin extends Model
 
     protected $guarded = [];
 
+    protected $table = 'next_of_kins';
+
     public function student() {
         return $this->belongsTo(Student::class);
     }

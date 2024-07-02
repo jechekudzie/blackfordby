@@ -10,6 +10,15 @@ class Student extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $with = [
+        'gender',
+        'contacts',
+        'addresses',
+        'identifications',
+        'guardian',
+        'nextOfKin',
+        'emergencyContact'
+    ];
 
     public function gender() {
         return $this->belongsTo(Gender::class);
@@ -27,16 +36,16 @@ class Student extends Model
         return $this->hasMany(Identification::class);
     }
 
-    public function guardians() {
-        return $this->hasMany(Guardian::class);
+    public function guardian() {
+        return $this->hasOne(Guardian::class);
     }
 
-    public function nextOfKins() {
-        return $this->hasMany(NextOfKin::class);
+    public function nextOfKin() {
+        return $this->hasOne(NextOfKin::class);
     }
 
-    public function emergencyContacts() {
-        return $this->hasMany(EmergencyContact::class);
+    public function emergencyContact() {
+        return $this->hasOne(EmergencyContact::class);
     }
 
     public function academicHistories() {
@@ -53,5 +62,27 @@ class Student extends Model
 
     public function scholarships() {
         return $this->hasMany(Scholarship::class);
+    }
+
+//    public function scopeSearch($query, $value){
+//        $query->where('studentFirstName', 'like', "%{$value}%")
+//            ->orWhere('studentLastName', 'like', "%{$value}%");
+//    }
+
+    // Define the local scope
+    public function scopeSearch($query, $value)
+    {
+
+        $query->where('first_name', 'like', "%{$value}%")
+            ->orWhere('last_name', 'like', "%{$value}%");
+//        if ($firstName) {
+//            $query->where('first_name', 'like', '%' . $firstName . '%');
+//        }
+//
+//        if ($lastName) {
+//            $query->where('last_name', 'like', '%' . $lastName . '%');
+//        }
+
+        return $query;
     }
 }

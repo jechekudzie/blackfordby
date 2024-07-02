@@ -27,53 +27,8 @@
             <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 {{ $currentStep == 1 ? 'border-blue-600' : 'border-gray-500' }}">
                 3
             </span>
-            Address
+            Guardian & Next Of Kin Details
             @if ($currentStep > 3)
-                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
-                </svg>
-            @endif
-        </li>
-        <li class="flex items-center {{ $currentStep == 4 ? 'text-blue-600' : '' }}">
-            <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 {{ $currentStep == 1 ? 'border-blue-600' : 'border-gray-500' }}">
-                4
-            </span>
-            Guardian Details
-            @if ($currentStep > 4)
-                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
-                </svg>
-            @endif
-        </li>
-        <li class="flex items-center {{ $currentStep == 5 ? 'text-blue-600' : '' }}">
-            <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 {{ $currentStep == 1 ? 'border-blue-600' : 'border-gray-500' }}">
-                5
-            </span>
-            Next of kin
-            @if ($currentStep > 5)
-                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
-                </svg>
-            @endif
-        </li>
-        <li class="flex items-center {{ $currentStep == 6 ? 'text-blue-600' : '' }}">
-            <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 {{ $currentStep == 1 ? 'border-blue-600' : 'border-gray-500' }}">
-                6
-            </span>
-            Identification
-            @if ($currentStep > 6)
-                <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
-                </svg>
-            @endif
-        </li>
-
-        <li class="flex items-center {{ $currentStep == 7 ? 'text-blue-600' : '' }}">
-            <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 {{ $currentStep == 1 ? 'border-blue-600' : 'border-gray-500' }}">
-                7
-            </span>
-            Emergency Contacts
-            @if ($currentStep > 7)
                 <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
                 </svg>
@@ -85,7 +40,7 @@
                 8
             </span>
             Languages
-            @if ($currentStep > 8)
+            @if ($currentStep > 4)
                 <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
                 </svg>
@@ -95,21 +50,14 @@
     </ol>
 
     @if ($currentStep == 1)
-        <livewire:student.profile.student-details-component />
+        @livewire('student.profile.student-details-component')
     @elseif ($currentStep == 2)
-        <livewire:student.profile.contacts-component />
+        @livewire('student.profile.contacts-component')
     @elseif ($currentStep == 3)
-        <livewire:student.profile.address-component />
+        @livewire('student.profile.guardians-component')
     @elseif ($currentStep == 4)
-        <livewire:student.profile.guardians-component />
-    @elseif ($currentStep == 5)
-        <livewire:student.profile.next-of-kin-component />
-    @elseif ($currentStep == 6)
-        <livewire:student.profile.identification-component />
-    @elseif ($currentStep == 7)
-        <livewire:student.profile.emergency-contacts-component />
-    @elseif ($currentStep == 8)
-        <livewire:student.profile.languages-component />
+{{--        <livewire:student.profile.languages-component />--}}
+        @livewire('student.profile.languages-component')
     @endif
 
     <div class="flex justify-between mt-4">
@@ -117,10 +65,12 @@
             <button wire:click="previousStep" class="px-4 py-2 bg-gray-300 rounded">Previous</button>
         @endif
 
-        @if ($currentStep < 8)
+        @if ($currentStep < 4)
             <button wire:click="nextStep" class="px-4 py-2 bg-blue-600 text-white rounded">Next</button>
         @else
-            <button wire:click="submitForm" class="px-4 py-2 bg-green-600 text-white rounded">Submit</button>
+            <button wire:click="nextStep" class="px-4 py-2 bg-green-600 text-white rounded">Submit</button>
         @endif
     </div>
+
+
 </div>
