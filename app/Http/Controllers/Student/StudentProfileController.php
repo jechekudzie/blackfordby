@@ -14,5 +14,12 @@ class StudentProfileController extends Controller
 
         return view('student.profile.view_student', compact('studentData'));
     }
+
+    public function edit(Student $student)
+    {
+        $studentData  = Student::find($student->id);
+        return view('student.profile.edit-student', compact('studentData'));
+    }
 }
+
 

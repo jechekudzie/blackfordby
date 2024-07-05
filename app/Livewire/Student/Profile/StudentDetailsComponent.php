@@ -4,6 +4,8 @@ namespace App\Livewire\Student\Profile;
 
 use App\Models\Gender;
 use App\Models\IdentificationType;
+use App\Models\MaritalStatus;
+use App\Models\Title;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Livewire\Attributes\Computed;
@@ -20,6 +22,12 @@ class StudentDetailsComponent extends Component
     public $issuedDate;
     public $expiryDate;
     public $identificationDocument;
+
+
+    public $selectedTitleId;
+
+
+    public $selectedMaritalStatus;
 
     protected $rules = [
         'first_name' => 'required|string|max:255',
@@ -40,11 +48,14 @@ class StudentDetailsComponent extends Component
     ];
 
     public function render() {
-
         $genders = Gender::pluck('name', 'id');
         $selectedGender = 0;
         $identificationTypes = IdentificationType::pluck('name', 'id');
         $selectedIdentificationType = 0;
+        $titles = Title::pluck('name', 'id');
+        $this->selectedTitleId = 0;
+        $maritalStatus = MaritalStatus::pluck('name', 'id');
+        $this->selectedMaritalStatus = 0;
 
         return view('livewire.student.profile.student-details-component',
             [
@@ -52,6 +63,10 @@ class StudentDetailsComponent extends Component
                 'selectedGender' => $selectedGender,
                 'identificationTypes' => $identificationTypes,
                 'selectedIdentificationType' => $selectedIdentificationType,
+                'titles' => $titles,
+                'maritalStatus' => $maritalStatus,
+                'selectedTitleId' => $this->selectedTitleId,
+                'selectedMaritalStatus' => $this->selectedMaritalStatus,
             ]);
     }
 
@@ -60,7 +75,7 @@ class StudentDetailsComponent extends Component
 
     public function updateDateOfBirth($value)
     {
-        dd($value);
+
         $this->date_of_birth = $value;
     }
 

@@ -1,7 +1,7 @@
 <div>
         <div class="flex flex-row gap-4">
             <div class="w-1/4">
-                @if(!$isEditStudentProfile)
+
                     <x-cards.student_card  avatar="https://i.pravatar.cc/300"
                                            name="{{ $student->first_name . ' ' . $student->last_name }}"
                                            course="Animal Husbandry"
@@ -20,7 +20,7 @@
                                 <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                                     <ul class="py-2" aria-labelledby="dropdownButton">
                                         <li>
-                                            <button wire:click="setProfileEditMode()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</button>
+                                            <a href="{{url('/edit_student_profile/'.$student->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
                                         </li>
                                         <li>
                                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
@@ -34,23 +34,12 @@
                         @endslot
                         <div class="content-start mt-2 ">
                             <x-cards.card-primary-title title="Gender" subtitle="{{ $student->gender->name }}"/>
-                            <x-cards.card-primary-title title="Date of birth" subtitle="{{ $student->date_of_birth }}"/>
-                            <x-cards.card-primary-title title="Enrollment Date" subtitle="{{ $student->enrollment_date }}" class="mt-2"/>
+                            <x-cards.card-primary-title title="Date of birth" subtitle="{{ $this->getHumanDate($student->date_of_birth)  }}"/>
+                            <x-cards.card-primary-title title="Enrollment Date" subtitle="{{ $this->getHumanDate($student->enrollment_date)  }}" class="mt-2"/>
                             <x-cards.card-primary-title title="Status" subtitle="Pending" class="mt-2"/>
                             <x-cards.card-primary-title title="Language" subtitle="{{ $student->languages[0]->language }}" class="mt-2"/>
-
-                            <x-form.plain-button title="Edit" data-modal-target="studentProfileId" data-modal-toggle="studentProfileId" />
-{{--                            <button data-modal-target="studentProfileId" data-modal-toggle="studentProfileId" class="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">--}}
-{{--                                Small modal--}}
-{{--                            </button>--}}
-
                         </div>
                     </x-cards.student_card>
-                @elseif($isEditStudentProfile)
-                    <x-cards.simple-card>
-                        fdsjlfsdjflksjl
-                    </x-cards.simple-card>
-                @endif
             </div>
             <div class="w-full">
                 <x-cards.simple-card title=" ">
@@ -69,15 +58,12 @@
                             <div class="flex flex-row gap-4">
                                 <div class="w-1/2">
                                     <x-cards.simple-card title="Identification Details">
-                                        @slot('leading')
-                                            <x-form.btn-edit-dialog id="edit-identification-id"/>
-                                        @endslot
                                         <div class="flex flex-col gap-2">
                                             <x-cards.card-primary-title
                                                 title="{{ $student->identifications[0]->identificationType->name }}"
                                                 subtitle=" {{ $student->identifications[0]->identification_number }} "/>
-                                            <x-cards.card-primary-title title="Issued Date" subtitle="{{ $student->identifications[0]->issued_date }}"/>
-                                            <x-cards.card-primary-title title="Expiry Date" subtitle="{{ $student->identifications[0]->expiry_date }}"/>
+                                            <x-cards.card-primary-title title="Issued Date" subtitle="{{ $this->getHumanDate($student->identifications[0]->issued_date)  }}"/>
+                                            <x-cards.card-primary-title title="Expiry Date" subtitle="{{ $this->getHumanDate($student->identifications[0]->expiry_date)  }}"/>
 {{--                                        <img class="h-auto size-1.5 max-w-lg rounded-lg" src="https://i.pravatar.cc/30" alt="image description">--}}
                                            <div class="flex flex-row gap-2">
                                                <x-form.plain-button  title="View document" />
@@ -88,9 +74,6 @@
                                 </div>
                                 <div class="w-1/2">
                                     <x-cards.simple-card title="Student Address">
-                                        @slot('leading')
-                                            <x-form.btn-edit-dialog id="edit-address-id"/>
-                                        @endslot
                                         <div class="flex flex-col gap-2">
                                             <x-cards.card-primary-title title="Country" subtitle="{{ $student->addresses[0]->country->name }}"/>
                                             <x-cards.card-primary-title title="Province" subtitle=" {{ $student->addresses[0]->province->name }} "/>
@@ -106,9 +89,6 @@
                             <div class="flex flex-row gap-4">
                                 <div class="w-1/2">
                                     <x-cards.simple-card title="Guardian Details">
-                                        @slot('leading')
-                                            <x-form.btn-edit-dialog id="edit-guardian-id"/>
-                                        @endslot
                                         <div class="flex flex-col gap-2">
                                             <x-cards.card-primary-title title="Name" subtitle="{{ $student->guardian->first_name . ' ' . $student->guardian->last_name }}"/>
                                             <x-cards.card-primary-title title="Relationship" subtitle="{{ $student->guardian->relationship }}"/>
@@ -119,15 +99,11 @@
                                 </div>
                                 <div class="w-1/2">
                                     <x-cards.simple-card title="Emergency Contact">
-                                        @slot('leading')
-                                            <x-form.btn-edit-dialog id="edit-emergency-contact-id"/>
-                                        @endslot
                                         <div class="flex flex-col gap-2">
                                             <x-cards.card-primary-title title="Name" subtitle="{{ $student->emergencyContact->name  }}"/>
                                             <x-cards.card-primary-title title="Relationship" subtitle="{{ $student->emergencyContact->relationship }}"/>
                                             <x-cards.card-primary-title title="Phonenumber" subtitle="{{ $student->emergencyContact->phone_number }}"/>
                                             <x-cards.card-primary-title title="Email" subtitle="{{ $student->emergencyContact->email }}"/>
-
                                         </div>
                                     </x-cards.simple-card>
                                 </div>
@@ -135,9 +111,6 @@
                             <div class="flex flex-row gap-4 mt-3">
                                 <div class="w-1/2">
                                     <x-cards.simple-card title="Next of kin">
-                                        @slot('leading')
-                                            <x-form.btn-edit-dialog id="edit-next-of-kin-id"/>
-                                        @endslot
                                         <div class="flex flex-col gap-2">
                                             <x-cards.card-primary-title title="Name" subtitle="{{ $student->nextOfKin->first_name . ' ' . $student->nextOfKin->last_name }}"/>
                                             <x-cards.card-primary-title title="Relationship" subtitle="{{ $student->nextOfKin->relationship }}"/>
@@ -153,284 +126,39 @@
             </div>
         </div>
 
-    <!--Edit student profile modal-->
-    <x-modal.large-modal title="Edit Student Profile" id="studentProfileId">
-        @slot('body')
-            <form wire:submit.prevent="submit" class="mt-3">
-                <div class="flex flex-row gap-4">
-                    <div class="w-1/2">
-                        <div class="flex flex-col">
-                            <x-form.label name="Firstname" />
-                            <x-form.floating-input
-                                value=" {{ $student->first_name }}"
-                                name="identificationNumber"
-                                id="identificationNumber"
-                                placeholder="Firstname" />
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            console.log('JS comp initialized');
+            let component = @this;
+            const dateOfBirth = document.getElementById('dateOfBirth');
+            const enrollmentDate = document.getElementById('enrollmentDate');
+            // const issuedDate = document.getElementById('issuedDate');
+            // const expiryDate = document.getElementById('expiryDate');
 
-                            <x-form.label name="Lastname" />
-                            <x-form.floating-input
-                                name="identificationNumber"
-                                id="identificationNumber"
-                                placeholder="Lastname" />
+            dateOfBirth.addEventListener('changeDate', (event) => {
+                console.log(event.detail.date);
+                component.dispatch('editDate', {data:event.detail.date })
 
-                            <x-form.label name="Phonenumber" />
-                            <x-form.floating-input
-                                name="identificationNumber"
-                                id="identificationNumber"
-                                placeholder="Phonenumber" />
+            });
 
-                            <x-form.label name="Email" />
-                            <x-form.floating-input
-                                name="identificationNumber"
-                                id="identificationNumber"
-                                placeholder="Email" />
-                        </div>
-                    </div>
-                    <div class="w-1/2">
-                        <div class="flex flex-col gap-4 mt-2">
-                            <x-form.drop-down
-                                name="gender_id"
-                                :options="[]"
-                                :selected="1"
-                                placeholder="Select Gender" />
+            enrollmentDate.addEventListener('blur', (event) => {
+                console.log(event.target.value);
+                component.set('enrollmentDate', event.target.value);
+            });
 
 
-                            <x-form.flow-datepicker
-                                value="" maxDate="12/31/2024"
-                                name="enrollment_date" id="enrollment_date"
-                                placeholder="Date Of Birth"/>
+            // issuedDate.addEventListener('blur', (event) => {
+            //     console.log(event.target.value);
+            //     component.set('issuedDate', event.target.value);
+            // });
+            //
+            // expiryDate.addEventListener('blur', (event) => {
+            //     console.log(event.target.value);
+            //     component.set('expiryDate', event.target.value);
+            // });
 
-                        <x-form.flow-datepicker
-                            value="" maxDate="12/31/2024"
-                            name="enrollment_date" id="enrollment_date"
-                                placeholder="Enrollment Date"/>
-                        </div>
-
-
-                    </div>
-                </div>
-            </form>
-        @endslot
-        @slot('button_footer')
-            <x-form.primary-button>Save</x-form.primary-button>
-        @endslot
-    </x-modal.large-modal>
-
-    <!-- Edit Identification Dialog -->
-    <x-modal.default-modal title="Edit Student Identification" id="edit-identification-id">
-        @slot('body')
-            <form wire:submit.prevent="submit" class="mt-3">
-                <div class="flex flex-row gap-2">
-                    <div class="w-full">
-                        <div class="flex flex-col">
-                            <x-form.label name="National Id" />
-                            <x-form.floating-input
-                                name="identificationNumber"
-                                id="identificationNumber"
-                                placeholder="National Id" />
-
-                            <x-form.input-padding>
-                                <x-form.flow-datepicker
-                                    value="" maxDate="12/31/2024"
-                                    name="enrollment_date" id="enrollment_date"
-                                    placeholder="Issued Date"/>
-                            </x-form.input-padding>
-
-                            <x-form.input-padding>
-                                <x-form.flow-datepicker
-                                    value="" maxDate="12/31/2024"
-                                    name="enrollment_date" id="enrollment_date"
-                                    placeholder="Expiry Date"/>
-                            </x-form.input-padding>
-
-                            <x-form.label name="Document file" />
-                            <x-form.file-input
-                                name="identificationDocument"
-                                id="identificationDocument"
-                                placeholder="Document file" />
-
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-        @endslot
-        @slot('button_footer')
-            <x-form.primary-button>Save</x-form.primary-button>
-        @endslot
-    </x-modal.default-modal>
-
-    <!-- Edit Address Dialog -->
-    <x-modal.default-modal title="Edit Student Address" id="edit-address-id">
-        @slot('body')
-            <form wire:submit.prevent="submit" class="mt-3">
-                <div class="flex flex-row gap-2">
-                    <div class="w-full">
-                        <div class="flex flex-col">
-                            <x-form.drop-down
-                                name="gender_id"
-                                :options="[]"
-                                :selected="1"
-                                placeholder="Country" />
-
-                            <x-form.input-padding>
-                                <x-form.drop-down
-                                    name="gender_id"
-                                    :options="[]"
-                                    :selected="1"
-                                    placeholder="Province" />
-                            </x-form.input-padding>
-
-
-                            <x-form.input-padding>
-                                <x-form.drop-down
-                                    name="gender_id"
-                                    :options="[]"
-                                    :selected="1"
-                                    placeholder="City" />
-                            </x-form.input-padding>
-
-
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                               name="identificationNumber"
-                               id="identificationNumber"
-                               placeholder="Address" />
-                            </x-form.input-padding>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-        @endslot
-        @slot('button_footer')
-            <x-form.primary-button>Save</x-form.primary-button>
-        @endslot
-    </x-modal.default-modal>
-
-    <!--Edit Guardian Details -->
-    <x-modal.default-modal title="Edit Guardian Details" id="edit-guardian-id">
-        @slot('body')
-            <form wire:submit.prevent="submit" class="mt-3">
-                <div class="flex flex-row gap-2">
-                    <div class="w-full">
-                        <div class="flex flex-col">
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Fullname" />
-
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Relationship" />
-                            </x-form.input-padding>
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Phonenumber" />
-                            </x-form.input-padding>
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Email" />
-                            </x-form.input-padding>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-        @endslot
-        @slot('button_footer')
-            <x-form.primary-button>Save</x-form.primary-button>
-        @endslot
-    </x-modal.default-modal>
-
-    <!-- Edit Emegency Contact Details -->
-    <x-modal.default-modal title="Edit Emergency Contact" id="edit-emergency-contact-id">
-        @slot('body')
-            <form wire:submit.prevent="submit" class="mt-3">
-                <div class="flex flex-row gap-2">
-                    <div class="w-full">
-                        <div class="flex flex-col">
-                            <x-form.floating-input
-                                name="identificationNumber"
-                                id="identificationNumber"
-                                placeholder="Fullname" />
-
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Relationship" />
-                            </x-form.input-padding>
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Phonenumber" />
-                            </x-form.input-padding>
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Email" />
-                            </x-form.input-padding>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-        @endslot
-        @slot('button_footer')
-            <x-form.primary-button>Save</x-form.primary-button>
-        @endslot
-    </x-modal.default-modal>
-
-    <!-- Edit Emegency Contact Details -->
-    <x-modal.default-modal title="Edit Next of kin details" id="edit-next-of-kin-id">
-        @slot('body')
-            <form wire:submit.prevent="submit" class="mt-3">
-                <div class="flex flex-row gap-2">
-                    <div class="w-full">
-                        <div class="flex flex-col">
-                            <x-form.floating-input
-                                name="identificationNumber"
-                                id="identificationNumber"
-                                placeholder="Fullname" />
-
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Relationship" />
-                            </x-form.input-padding>
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Phonenumber" />
-                            </x-form.input-padding>
-                            <x-form.input-padding>
-                                <x-form.floating-input
-                                    name="identificationNumber"
-                                    id="identificationNumber"
-                                    placeholder="Email" />
-                            </x-form.input-padding>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-        @endslot
-        @slot('button_footer')
-            <x-form.primary-button>Save</x-form.primary-button>
-        @endslot
-    </x-modal.default-modal>
-
+        });
+    </script>
 
 </div>
 

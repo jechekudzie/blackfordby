@@ -10,11 +10,14 @@ class GuardiansComponent extends Component
     public $guardianFirstName;
     public $guardianLastName;
     public $guardianRelationship;
-    public $guardianContactDetails;
+    public $guardianPhonenumber;
+    public $guardianEmail;
     public $nextOfKinFirstName;
     public $nextOfKinLastName;
     public $nextOfKinRelationship;
-    public $nextOfKinContactDetails;
+    public $nextOfKinPhonenumber;
+    public $nextOfKinEmail;
+
 
 
 //    protected $rules = [
@@ -49,7 +52,8 @@ class GuardiansComponent extends Component
             'first_name' => $this->guardianFirstName,
             'last_name' => $this->guardianLastName,
             'relationship' => $this->guardianRelationship,
-            'contact_details' => $this->guardianContactDetails,
+            'phonenumber' => $this->guardianPhonenumber,
+            'email' => $this->guardianEmail,
         ];
 
         $nextOfKinData = [
@@ -57,7 +61,8 @@ class GuardiansComponent extends Component
             'first_name' => $this->nextOfKinFirstName,
             'last_name' => $this->nextOfKinLastName,
             'relationship' => $this->nextOfKinRelationship,
-            'contact_details' => $this->nextOfKinContactDetails,
+            'phonenumber' => $this->nextOfKinPhonenumber,
+            'email' => $this->nextOfKinEmail,
         ];
 
         // Emit data to parent component

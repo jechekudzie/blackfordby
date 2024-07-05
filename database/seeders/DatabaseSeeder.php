@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(class: ContactTypeSeeder::class);
         $this->call(class: AddressTypeSeeder::class);
         $this->call(class: CountrySeeder::class);
+        $this->call(class: TitleSeeder::class);
     }
 }

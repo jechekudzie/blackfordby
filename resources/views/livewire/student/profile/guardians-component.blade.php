@@ -30,10 +30,18 @@
 
                         <x-form.input-padding>
                             <x-form.floating-input
-                                wire:model="guardianContactDetails"
-                                name="guardianContactDetails"
-                                id="guardianContactDetails"
-                                placeholder="Contact Details" />
+                                wire:model="guardianPhonenumber"
+                                name="guardianPhonenumber"
+                                id="guardianPhonenumber"
+                                placeholder="Phonenumber" />
+                        </x-form.input-padding>
+
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="guardianEmail"
+                                name="guardianEmail"
+                                id="guardianEmail"
+                                placeholder="Email" />
                         </x-form.input-padding>
                     </div>
                 </x-cards.simple-card>
@@ -66,10 +74,18 @@
 
                         <x-form.input-padding>
                             <x-form.floating-input
-                                wire:model="nextOfKinContactDetails"
-                                name="nextOfKinContactDetails"
-                                id="nextOfKinContactDetails"
-                                placeholder="Contact Details" />
+                                wire:model="nextOfKinPhonenumber"
+                                name="nextOfKinPhonenumber"
+                                id="nextOfKinPhonenumber"
+                                placeholder="Phonenumber" />
+                        </x-form.input-padding>
+
+                        <x-form.input-padding>
+                            <x-form.floating-input
+                                wire:model="nextOfKinEmail"
+                                name="nextOfKinEmail"
+                                id="nextOfKinEmail"
+                                placeholder="Email" />
                         </x-form.input-padding>
                     </div>
                 </x-cards.simple-card>

@@ -19,3 +19,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/view_student_profile/{student}',
         [StudentProfileController::class, 'show'])
         ->name('view-student-profile');
+
+Route::get('/edit_student_profile/{student}',
+    [StudentProfileController::class, 'edit'])
+    ->name('edit-student-profile');

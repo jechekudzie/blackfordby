@@ -5,6 +5,24 @@
                 <x-cards.simple-card title="Student Details">
                     <div class="flex flex-col gap-2">
                                     <x-form.input-padding>
+                                        <x-form.drop-down
+                                            wire:model="selectedTitleId"
+                                            name="selectedTitleId"
+                                            :options="$titles"
+                                            :selected="$selectedTitleId"
+                                            placeholder="Select Title" />
+                                    </x-form.input-padding>
+
+                                    <x-form.input-padding>
+                                        <x-form.drop-down
+                                            wire:model="selectedMaritalStatus"
+                                            name="selectedMaritalStatus"
+                                            :options="$maritalStatus"
+                                            :selected="$selectedMaritalStatus"
+                                            placeholder="Select marital status" />
+                                    </x-form.input-padding>
+
+                                    <x-form.input-padding>
                                         <x-form.floating-input value=""  wire:model="first_name"  name="first_name" id="first_name" placeholder="First Name" />
                                     </x-form.input-padding>
 
@@ -71,11 +89,26 @@
                                                     id="expiryDate"
                                                     placeholder="Expiry Date"/>
                         </x-form.input-padding>
+
                         <x-form.file-input
                             wire:model="identificationDocument"
-                           name="identificationDocument"
+                            name="identificationDocument"
                             id="identificationDocument"
                             placeholder="Id Document" />
+
+                        <x-form.file-input
+{{--                            wire:model="identificationDocument"--}}
+                           name="birthCertificate"
+                            id="birthCertificate"
+                            placeholder="Birth certificate" />
+
+                        <x-form.file-input
+{{--                            wire:model="identificationDocument"--}}
+                            name="marriageCertificate"
+                            id="marriageCertificate"
+                            placeholder="Marriage certificate" />
+                        <br>
+
                     </div>
                 </x-cards.simple-card>
             </div>
