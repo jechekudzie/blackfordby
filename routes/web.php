@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
         [StudentProfileController::class, 'show'])
         ->name('view-student-profile');
 
-Route::get('/edit_student_profile/{student}',
+    Route::get('/edit_student_profile/{student}',
     [StudentProfileController::class, 'edit'])
     ->name('edit-student-profile');
+
+    Route::get('/educational-requirements', function (){
+        return view('student.profile.educational-qualifications-view');
+    })->name('educational-requirements');

@@ -101,6 +101,8 @@
                         <a href="{{ route('view_students') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">All Students</a>
                     </li>
                     <li>
+                        <a href="{{ route('educational-requirements') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Academic Certificates</a>
+                    </li> <li>
                         <a href="{{ route('view_student') }}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Profile</a>
                     </li>
                     <li>

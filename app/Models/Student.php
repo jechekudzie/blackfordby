@@ -64,6 +64,16 @@ class Student extends Model
         return $this->hasMany(Scholarship::class);
     }
 
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function qualifications()
+    {
+        return $this->hasMany(Qualification::class);
+    }
+
 //    public function scopeSearch($query, $value){
 //        $query->where('studentFirstName', 'like', "%{$value}%")
 //            ->orWhere('studentLastName', 'like', "%{$value}%");

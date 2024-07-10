@@ -110,15 +110,15 @@ class StudentFormStepperComponent extends Component
 }
 
     public function storeEmergencyContacts($data)
-{
-    $this->emergencyContacts = $data;
-    $this->stepValidated();
-}
+    {
+        $this->emergencyContacts = $data;
+        $this->stepValidated();
+    }
 
     public function storeLanguages($data)
-{
-    $this->saveAllData($data);
-}
+    {
+        $this->saveAllData($data);
+    }
 
     // Save all data to the database
     public function saveAllData($data)
@@ -149,6 +149,7 @@ class StudentFormStepperComponent extends Component
 
         // Redirect or show a success message
         session()->flash('message', 'Student information saved successfully.');
+        $this->currentStep = 1;
         return redirect()->route('view_students');
     }
 

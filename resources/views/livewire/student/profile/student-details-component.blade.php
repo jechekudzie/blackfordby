@@ -63,7 +63,7 @@
                     <div class="flex flex-col gap-2">
                         <x-form.input-padding>
                             <x-form.drop-down
-                                wire:model.change="identificationTypeId"
+                                wire:model="identificationTypeId"
                                 name="identificationTypeId"
                                 :options="$identificationTypes"
                                 :selected="$selectedIdentificationType"
@@ -97,13 +97,13 @@
                             placeholder="Id Document" />
 
                         <x-form.file-input
-{{--                            wire:model="identificationDocument"--}}
+                            wire:model="birthCertificate"
                            name="birthCertificate"
                             id="birthCertificate"
                             placeholder="Birth certificate" />
 
                         <x-form.file-input
-{{--                            wire:model="identificationDocument"--}}
+                            wire:model="marriageCertificate"
                             name="marriageCertificate"
                             id="marriageCertificate"
                             placeholder="Marriage certificate" />

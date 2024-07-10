@@ -22,12 +22,11 @@ class StudentDetailsComponent extends Component
     public $issuedDate;
     public $expiryDate;
     public $identificationDocument;
-
-
     public $selectedTitleId;
-
-
     public $selectedMaritalStatus;
+
+    public $birthCertificate = '';
+    public $marriageCertificate = '';
 
     protected $rules = [
         'first_name' => 'required|string|max:255',
@@ -107,6 +106,8 @@ class StudentDetailsComponent extends Component
         $issuedDate = convertDateFormat($this->issuedDate);
         $expiryDate = convertDateFormat($this->expiryDate);
         $file = $this->identificationDocument->store('uploads', 'public');
+        $birthcertificateFile = $this->birthCertificate->store('uploads', 'public');
+        $marriageFile = $this->marriageCertificate->store('uploads', 'public');
         // Collect data
         $data = [
             'first_name' => $this->first_name,
@@ -115,6 +116,8 @@ class StudentDetailsComponent extends Component
             'enrollment_date' => $convertedEnrollment,
             'status' => $this->status,
             'gender_id' => $this->gender_id,
+            'title_id' => $this->selectedTitleId,
+            'marital_status_id' => $this->selectedMaritalStatus,
         ];
 
         $identificationData = [
@@ -124,6 +127,8 @@ class StudentDetailsComponent extends Component
             'issued_date' => $issuedDate,
             'expiry_date' => $expiryDate,
             'file_path' => $file,
+            'birth_certificate' => $birthcertificateFile,
+            'marriage_certificate' => $marriageFile,
         ];
 
 

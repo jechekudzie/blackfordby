@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(class: AddressTypeSeeder::class);
         $this->call(class: CountrySeeder::class);
         $this->call(class: TitleSeeder::class);
+        $this->call(class: StudyYearSeeder::class);
+        $this->call(class: QualificationTypeSeeder::class);
     }
 }

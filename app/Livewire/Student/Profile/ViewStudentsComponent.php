@@ -39,7 +39,6 @@ class ViewStudentsComponent extends Component
         $student->delete();
     }
 
-
     public function viewStudent($id) {
         $student = Student::find($id);
         $this->dispatch('userSelected',  $student);
