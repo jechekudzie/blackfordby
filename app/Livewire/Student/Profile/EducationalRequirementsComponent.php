@@ -2,18 +2,24 @@
 
 namespace App\Livewire\Student\Profile;
 
+use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\EnrollmentType;
 use App\Models\EntryType;
 use App\Models\Institution;
 use App\Models\Qualification;
 use App\Models\Sponsor;
+use App\Models\Student;
 use App\Models\StudyYear;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class EducationalRequirementsComponent extends Component
 {
+    use WithFileUploads;
+
+    public Student $student;
 
     public $currentStep = 1;
 
@@ -65,6 +71,12 @@ class EducationalRequirementsComponent extends Component
 
     public $academicYears;
 
+    public $courses;
+    public $selectedCourseId = 0;
+
+    public function mount($student) {
+        $this->student = $student;
+    }
     public function render()
     {
 
@@ -76,6 +88,8 @@ class EducationalRequirementsComponent extends Component
         $this->schools = Institution::where('institution_name', 'like', "%{$this->search}%")->get();
 
         $this->academicYears = $this->createAcademicYears();
+
+        $this->courses = Course::pluck('name', 'id');
 
         return view('livewire.student.profile.educational-requirements-component',
         [
@@ -91,6 +105,8 @@ class EducationalRequirementsComponent extends Component
             'years' => $this->academicYears,
             'fromOlevelYearId' => $this->fromOlevelYearId,
             'toOlevelYearId' => $this->toOlevelYearId,
+            'courses' => $this->courses,
+            'selectedCourseId' => $this->selectedCourseId,
         ]);
     }
 
@@ -108,7 +124,7 @@ class EducationalRequirementsComponent extends Component
             $formattedFromAlevelYear = $this->academicYears[$this->fromAlevelYearId];
             $formattedToAlevelYear = $this->academicYears[$this->toAlevelYearId];
             $formattedFromCollegeYear = $this->academicYears[$this->fromCollegeYearId];
-            $formattedToCollegeYear = $this->academicYears[$this->toCollegeYear];
+            $formattedToCollegeYear = $this->academicYears[$this->toCollegeYearId];
 
             $ordinaryCertificateFile = null;
             $ordinaryTranscriptFile = null;
@@ -117,27 +133,27 @@ class EducationalRequirementsComponent extends Component
             $collegeCertificateFile = null;
             $collegeTranscriptFile = null;
 
-            if(!isNotEmpty($this->ordinaryLevelCertificate)){
+            if(!empty($this->ordinaryLevelCertificate)){
                 $ordinaryCertificateFile = $this->ordinaryLevelCertificate->store('uploads', 'public');
             }
-            if(!isNotEmpty($this->advancedLevelCertificate)){
+            if(!empty($this->advancedLevelCertificate)){
                 $advancedCertificateFile = $this->advancedLevelCertificate->store('uploads', 'public');
             }
-            if(!isNotEmpty($this->collegeCertificate)){
+            if(!empty($this->collegeCertificate)){
                 $collegeCertificateFile = $this->collegeCertificate->store('uploads', 'public');
             }
-            if(!isNotEmpty($this->ordinaryLevelTranscript)){
+            if(!empty($this->ordinaryLevelTranscript)){
                 $ordinaryTranscriptFile = $this->ordinaryLevelTranscript->store('uploads', 'public');
             }
-            if(!isNotEmpty($this->advancedLevelTranscript)){
-                $collegeCertificateFile = $this->advancedLevelCertificate->store('uploads', 'public');
+            if(!empty($this->advancedLevelTranscript)){
+                $advancedTranscriptFile = $this->advancedLevelCertificate->store('uploads', 'public');
             }
-            if(!isNotEmpty($this->collegeTranscript)){
+            if(!empty($this->collegeTranscript)){
                 $collegeTranscriptFile = $this->collegeTranscript->store('uploads', 'public');
             }
 
             Qualification::create([
-                'student_id' => '',
+                'student_id' => $this->student->id,
                 'ordinary_level_institution_id' => $this->selectedOrdinaryLevelSchoolId,
                 'ordinary_level_id' => 1,
                 'ordinary_level_certificate' => $ordinaryCertificateFile,
@@ -156,15 +172,15 @@ class EducationalRequirementsComponent extends Component
             ]);
 
             Enrollment::create([
-                'student_id' => 1,
+                'student_id' => $this->student->id,
+                'course_id' => $this->selectedCourseId,
                 'enrollment_year_id' => $this->selectedEnrollmentYearId,
                 'entry_type_id' => $this->selectedEntryTypeId,
                 'enrollment_type_id' => $this->selectedEnrollmentTypesId,
                 'sponsor_id' => $this->selectedSponsorId ,
             ]);
 
-            session()->flash('message', 'Enrollment and qualification information saved successfully.');
-
+            request()->session()->flash('education-details-saved', 'Enrollment and qualification information saved successfully.');
         }else {
             $this->currentStep++;
         }
@@ -176,13 +192,15 @@ class EducationalRequirementsComponent extends Component
     }
 
     #[On('ordinary-level-school-selected')]
-    public function updatedSelectedOLevelSchool($id, $institution_name){
+    public function updatedSelectedOLevelSchool($id, $institution_name): void
+    {
         $this->selectedOrdinaryLevelSchoolId = $id;
         $this->selectedOrdinaryLevelSchoolName = $institution_name;
     }
 
-    #[On('advanced-level-school-selected')]
-    public function updatedSelectedALevelSchool($id, $institution_name){
+    #[On(event: 'advanced-level-school-selected')]
+    public function updatedSelectedALevelSchool($id, $institution_name): void
+    {
         $this->selectedAdvancedLevelSchoolId = $id;
         $this->selectedAdvancedLevelSchoolName = $institution_name;
     }

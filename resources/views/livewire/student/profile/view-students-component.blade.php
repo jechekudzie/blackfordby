@@ -9,6 +9,7 @@
                 <option value="2">Female</option>
             </select>
         </div>
+
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative mr-2 mt-2">
             <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -55,7 +56,10 @@
 
             </th>
             <th scope="col" class="px-6 py-3">
-                Course Level
+                Course
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Year
             </th>
             <th scope="col" class="px-6 py-3">
                 Id Number
@@ -86,22 +90,22 @@
                         <div class="font-normal text-gray-500">{{ 'Student ID: 10193888 '}}</div>
                     </div>
                 </th>
-                <td class="px-6 py-4">
-                    {{ 'NC'}}
-                </td>
-                <td class="px-6 py-4">
-                   {{ '1st Year' }}
 
-                </td>
                 <td class="px-6 py-4">
-                    @foreach($student->identifications as $identification)
-                        <li>{{ $identification->identification_number }}</li>
-                    @endforeach
+                    {{ $student->enrollments[0]->course->name ?? ''}}
                 </td>
 
+                <td class="px-6 py-4">
+                    {{ $student->enrollments[0]->enrollmentYear->year ?? '' }}
+                </td>
+
+                <td class="px-6 py-4">
+                    {{ $student->identifications[0]->identification_number }}
+                </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center">
-                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Pending
+                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+                        {{ count($student->enrollments) > 0 ?  $student->enrollments[0]->enrollmentStatus->status : 'Not Enrolled' }}
                     </div>
                 </td>
                 <td class="px-6 py-4">
@@ -117,7 +121,7 @@
                         <span class="sr-only">Icon description</span>
                     </a>
 
-                    <a href="{{url('/edit_driver/'.$student->id)}}" type="button" class="text-green-700 border border-green-700 hover:bg-green-200 hover:text-white
+                    <a href="{{url('/edit_student_profile/'.$student->id)}}" type="button" class="text-green-700 border border-green-700 hover:bg-green-200 hover:text-white
                            focus:ring-4 focus:outline-none focus:ring-green200-300 font-medium rounded-lg text-sm p-2
                            text-center inline-flex items-center me-2 dark:border-blue-500 dark:text-blue-500
                            dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
@@ -138,6 +142,12 @@
                         </svg>
                         <span class="sr-only">Icon description</span>
                     </button>
+                    <a href="{{ route('educational-requirements', $student) }}"  class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M5 8a4 4 0 1 1 7.796 1.263l-2.533 2.534A4 4 0 0 1 5 8Zm4.06 5H7a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h2.172a2.999 2.999 0 0 1-.114-1.588l.674-3.372a3 3 0 0 1 .82-1.533L9.06 13Zm9.032-5a2.907 2.907 0 0 0-2.056.852L9.967 14.92a1 1 0 0 0-.273.51l-.675 3.373a1 1 0 0 0 1.177 1.177l3.372-.675a1 1 0 0 0 .511-.273l6.07-6.07a2.91 2.91 0 0 0-.944-4.742A2.907 2.907 0 0 0 18.092 8Z" clip-rule="evenodd"/>
+                        </svg>
+                        Enroll
+                    </a>
                 </td>
             </tr>
         @endforeach

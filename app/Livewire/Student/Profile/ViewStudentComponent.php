@@ -38,8 +38,6 @@ class ViewStudentComponent extends Component
         $this->selectedGenderId = $student->gender->id;
 
         $this->student = $student;
-
-
     }
 
     public function render()

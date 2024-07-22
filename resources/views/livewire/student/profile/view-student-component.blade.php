@@ -1,13 +1,15 @@
 <div>
         <div class="flex flex-row gap-4">
             <div class="w-1/4">
-
-                    <x-cards.student_card  avatar="https://i.pravatar.cc/300"
+                    <x-cards.student_card  avatar=""
                                            name="{{ $student->first_name . ' ' . $student->last_name }}"
-                                           course="Animal Husbandry"
+                                           course="{{ $student->enrollments[0]->course->name }}"
                                            registration_number="38293973287"
                                            phonenumber="{{ $student->contacts[0]->phonenumber }}"
-                                           email="{{ $student->contacts[0]->email }}" >
+                                           email="{{ $student->contacts[0]->email }}"
+                                           :enrollment_status="$student->enrollments[0]->enrollmentStatus->status"
+                                           :enrollment_year="$student->enrollments[0]->enrollmentYear->year"
+                    >
                         @slot('options')
                             <div class="flex justify-end px-4 pt-4">
                                 <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
@@ -23,10 +25,10 @@
                                             <a href="{{url('/edit_student_profile/'.$student->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
+                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Manage enrollment</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Archive</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -50,6 +52,10 @@
                             </li>
                             <li class="me-2" role="presentation">
                                 <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-styled-tab" data-tabs-target="#styled-dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Guardians and Next of Kins</button>
+                            </li>
+                            <li class="me-2" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600
+                                 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-styled-tab" data-tabs-target="#student-qualifications" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Qualifications</button>
                             </li>
                         </ul>
                     </div>
@@ -120,6 +126,122 @@
                                     </x-cards.simple-card>
                                 </div>
                             </div>
+                        </div>
+                        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="student-qualifications" role="tabpanel" aria-labelledby="dashboard-tab">
+                            <div class="flex flex-row gap-4">
+                                <div class="w-1/4">
+                                    <x-cards.simple-card title="Ordinary Level">
+                                        <div class="flex flex-col gap-2">
+                                            <div class="flex-row mt-1 text-lg">
+                                                <p class="text-sm text-gray-900 dark:text-white">{{ $student->qualification->ordinaryLevelInstitution->institution_name }}</p>
+                                            </div>
+                                            <div class="flex items-center mt-2">
+                                                <div class="flex-1 min-w-0">
+                                                    <p>From</p>
+                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                        {{ $student->qualification->ordinary_level_start_year  }}
+                                                    </p>
+                                                </div>
+                                                <div class="items-center text-base text-gray-900 dark:text-white">
+                                                    <p class="items-center">To</p>
+                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                        {{ $student->qualification->ordinary_level_end_year  }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-row items-center mt-2">
+                                                <div class="flex-1 min-w-0">
+                                                    <button type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                        Download
+                                                    </button>
+                                                </div>
+                                                <div class="items-center text-base text-gray-900 dark:text-white">
+                                                    <button type="button" class="px-4 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                        View
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </x-cards.simple-card>
+                                </div>
+                                @if($student->qualification->advancedLevelInstitution->institution_name)
+                                    <div class="w-1/4">
+                                        <x-cards.simple-card title="Advanced Level">
+                                            <div class="flex flex-col gap-2">
+                                                <div class="flex-row mt-1">
+                                                    <p class="text-sm text-gray-900 dark:text-white">{{ $student->qualification->advancedLevelInstitution->institution_name }}</p>
+                                                </div>
+                                                <div class="flex items-center mt-2">
+                                                    <div class="flex-1 min-w-0">
+                                                        <p>From</p>
+                                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                            {{ $student->qualification->advanced_level_start_year  }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="items-center text-base text-gray-900 dark:text-white">
+                                                        <p class="items-center">To</p>
+                                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                            {{ $student->qualification->advanced_level_end_year  }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-row items-center mt-2">
+                                                    <div class="flex-1 min-w-0">
+                                                        <button type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                            Download
+                                                        </button>
+                                                    </div>
+                                                    <div class="items-center text-base text-gray-900 dark:text-white">
+                                                        <button type="button" class="px-4 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                            View
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </x-cards.simple-card>
+                                    </div>
+
+                                @endif
+                                @if($student->qualification->collegeLevelInstitution->institution_name)
+                                    <div class="w-1/4">
+                                        <x-cards.simple-card title="College">
+                                            <div class="flex flex-col gap-2">
+                                                <div class="flex-row mt-1">
+                                                    <p class="text-sm text-gray-900 dark:text-white">{{ $student->qualification->collegeLevelInstitution->institution_name }}</p>
+                                                </div>
+                                                <div class="flex items-center mt-2">
+                                                    <div class="flex-1 min-w-0">
+                                                        <p>From</p>
+                                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                            {{ $student->qualification->college_level_start_year  }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="items-center text-base text-gray-900 dark:text-white">
+                                                        <p class="items-center">To</p>
+                                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                            {{ $student->qualification->college_level_end_year  }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-row items-center mt-2">
+                                                    <div class="flex-1 min-w-0">
+                                                        <button type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                            Download
+                                                        </button>
+                                                    </div>
+                                                    <div class="items-center text-base text-gray-900 dark:text-white">
+                                                        <button type="button" class="px-4 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                            View
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </x-cards.simple-card>
+                                    </div>
+                                @endif
+                            </div>
+
+
                         </div>
                     </div>
                 </x-cards.simple-card>

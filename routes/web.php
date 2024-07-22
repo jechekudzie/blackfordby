@@ -4,11 +4,11 @@ use App\Http\Controllers\Student\StudentProfileController;
 use App\Livewire\Student\Profile\ViewStudentComponent;
 use Illuminate\Support\Facades\Route;
 
-    Route::get('/', function () {
+    Route::get('/add_student', function () {
         return view('welcome');
-    });
+    })->name('add_student');
 
-    Route::get('/view_students', function (){
+    Route::get('/', function (){
         return view('student.profile.view-students');
     })->name('view_students');
 
@@ -24,6 +24,17 @@ use Illuminate\Support\Facades\Route;
     [StudentProfileController::class, 'edit'])
     ->name('edit-student-profile');
 
-    Route::get('/educational-requirements', function (){
-        return view('student.profile.educational-qualifications-view');
-    })->name('educational-requirements');
+    Route::get('/educational-requirements/{student}',
+    [StudentProfileController::class, 'addEducationalRequirements'])
+    ->name('educational-requirements');
+
+    //Admin Routes
+    Route::get('/admin/enrollment', function (){
+        return view('admin.enrollment.index');
+    })->name('admin-enrollment');
+
+//    Route::get('/educational-requirements/{student}', function (){
+//        return view('student.profile.educational-qualifications-view', [StudentProfileController::class, 'addEducationalRequirements']);
+//    })->name('educational-requirements');
+
+

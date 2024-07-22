@@ -20,6 +20,12 @@ class StudentProfileController extends Controller
         $studentData  = Student::find($student->id);
         return view('student.profile.edit-student', compact('studentData'));
     }
+
+    public function addEducationalRequirements(Student $student)
+    {
+        $studentData  = Student::find($student->id);
+        return view('student.profile.educational-qualifications-view', compact('studentData'));
+    }
 }
 
 

@@ -46,7 +46,6 @@ class ViewStudentsComponent extends Component
         return redirect()->route('view_student', $student );
     }
 
-
     public function render()
     {
         $students = Student::with('identifications')

@@ -1,5 +1,6 @@
     <div>
         <div class="flex flex-row gap-4 p-4">
+
             <div class="w-1/4">
                     <div class="flex flex-col gap-2">
                         <ol class="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400 ml-10">
@@ -56,6 +57,13 @@
                 {{--            <x-cards.simple-card title="Student Details">--}}
                 <div class="flex flex-row gap-4 p-1">
                     <x-form.drop-down
+                        wire:model="selectedCourseId"
+                        name="selectedCourseId"
+                        :options="$courses"
+                        :selected="$selectedCourseId"
+                        placeholder="Select course"/>
+
+                    <x-form.drop-down
                         wire:model="selectedEnrollmentYearId"
                         name="selectedEnrollmentYearId"
                         :options="$enrollmentYears"
@@ -79,7 +87,6 @@
                         :options="$sponsors"
                         :selected="$selectedSponsorId"
                         placeholder="Select Sponsor" />
-
                 </div>
 
                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700 mt-8">
@@ -274,6 +281,10 @@
                                 placeholder="College transcript" />
                         </div>
 
+                        @if (session('education-details-saved'))
+                            <x-toast.general-toast session="{{ session('education-details-saved') }}"/>
+                        @endif
+
                     </div>
                 @endif
 
@@ -290,5 +301,6 @@
                     @endif
                 </div>
             </div>
+
         </div>
     </div>

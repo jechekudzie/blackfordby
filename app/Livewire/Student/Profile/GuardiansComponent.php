@@ -25,6 +25,7 @@ class GuardiansComponent extends Component
 //        'guardians.*.last_name' => 'required|string|max:255',
 //        'guardians.*.relationship' => 'required|string|max:255',
 //        'guardians.*.contact_details' => 'required|string|max:255',
+//        'guardians.*.email' => 'required|email|string|max:255',
 //        'first_name' => 'required|string|max:255',
 //        'last_name' => 'required|string|max:255',
 //        'relationship' => 'required|string|max:255',

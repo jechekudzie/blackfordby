@@ -64,8 +64,8 @@ class StudentDetailsComponent extends Component
                 'selectedIdentificationType' => $selectedIdentificationType,
                 'titles' => $titles,
                 'maritalStatus' => $maritalStatus,
-                'selectedTitleId' => $this->selectedTitleId,
-                'selectedMaritalStatus' => $this->selectedMaritalStatus,
+                'title_id' => $this->selectedTitleId,
+                'marital_status_id' => $this->selectedMaritalStatus,
             ]);
     }
 

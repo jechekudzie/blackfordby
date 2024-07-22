@@ -52,10 +52,13 @@ class StudentFormStepperComponent extends Component
     $this->dispatch('validateStep' . $this->currentStep);
 }
 
+  //Add another step
+
     public function previousStep()
 {
     $this->currentStep--;
 }
+
 
     public function stepValidated()
 {
@@ -76,25 +79,24 @@ class StudentFormStepperComponent extends Component
         $emergencyContacts,
         $address)
     {
-
         $this->contacts = $studentContactdata;
         $this->emergencyContacts = $emergencyContacts;
         $this->addresses = $address;
         $this->stepValidated();
     }
 
-    public function storeAddresses($data)
-{
-    $this->addresses = $data;
-    $this->stepValidated();
-}
+    public function storeAddresses($data){
+        $this->addresses = $data;
+        $this->stepValidated();
+    }
 
-    public function storeGuardians($guardianData, $nextOfKinData)
-{
-    $this->guardians = $guardianData;
-    $this->nextOfKins = $nextOfKinData;
-    $this->stepValidated();
-}
+
+    public function storeGuardians($guardianData, $nextOfKinData){
+            $this->guardians = $guardianData;
+            $this->nextOfKins = $nextOfKinData;
+            $this->stepValidated();
+
+    }
 
     public function storeNextOfKins($data)
 {
@@ -104,10 +106,10 @@ class StudentFormStepperComponent extends Component
 }
 
     public function storeIdentifications($data)
-{
-    $this->identifications = $data;
-    $this->stepValidated();
-}
+    {
+        $this->identifications = $data;
+        $this->stepValidated();
+    }
 
     public function storeEmergencyContacts($data)
     {

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -17,7 +19,9 @@ class Student extends Model
         'identifications',
         'guardian',
         'nextOfKin',
-        'emergencyContact'
+        'emergencyContact',
+        'enrollments',
+        'qualification'
     ];
 
     public function gender() {
@@ -64,15 +68,17 @@ class Student extends Model
         return $this->hasMany(Scholarship::class);
     }
 
-    public function enrollments()
+    public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
     }
 
-    public function qualifications()
+    public function qualification():HasOne
     {
-        return $this->hasMany(Qualification::class);
+        return $this->hasOne(Qualification::class);
     }
+
+
 
 //    public function scopeSearch($query, $value){
 //        $query->where('studentFirstName', 'like', "%{$value}%")
